@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>💜 A Question 💜</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Arial', sans-serif;
+        background: #e6d9ff; /* light purple */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        overflow: hidden;
+        text-align: center;
+    }
+
+    .container {
+        background: white;
+        padding: 25px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        max-width: 90%;
+    }
+
+    h1 {
+        color: #6a4fcf;
+    }
+
+    p {
+        color: #555;
+    }
+
+    button {
+        padding: 12px 28px;
+        font-size: 18px;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    #startBtn {
+        background: #b799ff;
+        color: white;
+    }
+
+    #startBtn:hover {
+        background: #9f80ff;
+    }
+
+    #yesBtn {
+        background: #9f80ff;
+        color: white;
+    }
+
+    #noBtn {
+        background: #ff7b7b;
+        color: white;
+        position: absolute;
+    }
+
+    img.main-img {
+        max-width: 100%;
+        border-radius: 15px;
+        margin-bottom: 15px;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .meme {
+        position: absolute;
+        width: 120px;
+        border-radius: 15px;
+        animation: pop 0.4s ease;
+    }
+
+    @keyframes pop {
+        from { transform: scale(0.2); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+    }
+</style>
+</head>
+<body>
+
+<!-- SUSPENSE SCREEN -->
+<div class="container" id="intro">
+    <h1>Babyy</h1>
+    <p>I have something for you…</p>
+    <p>You need to do one small thing first👀</p>
+    <button id="startBtn">Start</button>
+</div>
+
+<!-- QUESTION SCREEN -->
+<div class="container hidden" id="questionBox">
+    <img src="choice.jpg" class="main-img" alt="Choice">
+    <h1>Will you be my Valentine? 💜</h1>
+    <br>
+    <button id="yesBtn">YES 💕</button>
+    <button id="noBtn">NO 😭</button>
+</div>
+
+<!-- YES SCREEN -->
+<div class="container hidden" id="yesBox">
+    <img src="yes.jpg" class="main-img" alt="Yes">
+    <h1>YAAAY 💜💜💜</h1>
+    <p>You just made me the happiest 😌</p>
+</div>
+
+<script>
+    const startBtn = document.getElementById('startBtn');
+    const intro = document.getElementById('intro');
+    const questionBox = document.getElementById('questionBox');
+    const yesBox = document.getElementById('yesBox');
+    const noBtn = document.getElementById('noBtn');
+
+    startBtn.onclick = () => {
+        intro.classList.add('hidden');
+        questionBox.classList.remove('hidden');
+
+        // place NO button randomly at start
+        moveNoButton();
+    };
+
+    function moveNoButton() {
+        const x = Math.random() * (window.innerWidth - 120);
+        const y = Math.random() * (window.innerHeight - 60);
+        noBtn.style.left = x + 'px';
+        noBtn.style.top = y + 'px';
+    }
+
+    noBtn.onclick = () => {
+        // move button
+        moveNoButton();
+
+        // create meme image
+        const meme = document.createElement('img');
+        meme.src = 'meme.jpg';
+        meme.className = 'meme';
+        meme.style.left = Math.random() * (window.innerWidth - 120) + 'px';
+        meme.style.top = Math.random() * (window.innerHeight - 120) + 'px';
+
+        document.body.appendChild(meme);
+
+        // remove meme after 2.5 seconds
+        setTimeout(() => meme.remove(), 2500);
+    };
+
+    document.getElementById('yesBtn').onclick = () => {
+        questionBox.classList.add('hidden');
+        yesBox.classList.remove('hidden');
+    };
+</script>
+
+</body>
+</html>
